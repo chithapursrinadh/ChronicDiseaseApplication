@@ -1,0 +1,26 @@
+<div class="register-container">
+  <h2>Register</h2>
+  <form [formGroup]="registerForm" (ngSubmit)="register()">
+    <div>
+      <label>Full Name:</label>
+      <input type="text" formControlName="fullName">
+    </div>
+    <div>
+      <label>Email:</label>
+      <input type="email" formControlName="email">
+    </div>
+    <div>
+      <label>Password:</label>
+      <input type="password" formControlName="password">
+    </div>
+    <div>
+      <label>Role:</label>
+      <select formControlName="role">
+        <option value="Patient">Patient</option>
+        <option value="Provider">Healthcare Provider</option>
+      </select>
+    </div>
+    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+    <button type="submit" [disabled]="registerForm.invalid">Register</button>
+  </form>
+</div>

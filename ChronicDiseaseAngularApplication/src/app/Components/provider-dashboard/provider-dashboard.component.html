@@ -1,0 +1,22 @@
+<div class="provider-dashboard">
+  <h2>Provider Dashboard</h2>
+  <div *ngFor="let patient of patientMetrics">
+    <h3>{{ patient.patientName }}</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Value</th>
+          <th>Recorded At</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let metric of patient.metrics">
+          <td>{{ metric.metricType }}</td>
+          <td>{{ metric.value }}</td>
+          <td>{{ metric.recordedAt | date }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
