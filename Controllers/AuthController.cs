@@ -40,7 +40,8 @@ namespace ChronicDiseaseApplication.Controllers
                 return BadRequest(new { message = "Invalid login request" });
             }
 
-            if (model.Email == "test@example.com" && model.Password == "Password123")
+            // generally we will check with DB values, but I am giving here static data
+            if (model.Email == "4usrinadh@gmail.com" && model.Password == "Password@1627")
             {
                 var token = GenerateJwtToken(model.Email);
                 _logger.LogInformation($"User {model.Email} logged in successfully.");
@@ -52,20 +53,22 @@ namespace ChronicDiseaseApplication.Controllers
         }
         private string GenerateJwtToken(string email)
         {
-            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("YourSuperSecretKey123456!"));
+            // add jwt secret key in appsetting, so that at required places we can use from one place, and also if we need to update these keys on server,
+            // we can easily do in appsettings
+            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("Jwt:Secret"));
             var signingCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
 
             var claims = new[]
             {
             new Claim(ClaimTypes.Email, email),
-            new Claim(ClaimTypes.Role, "User")  // ✅ Can add roles if needed
+            new Claim(ClaimTypes.Role, "User")  
         };
 
             var token = new JwtSecurityToken(
-                issuer: "YourIssuer",
-                audience: "YourAudience",
+                issuer: "who-is-issuing-this add here",
+                audience: "Audience need to add here",
                 claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(60), // ✅ 1-hour expiry
+                expires: DateTime.UtcNow.AddMinutes(60), // adding 1 hour expiration for token
                 signingCredentials: signingCredentials
             );
 
